@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management Dashboard</title>
+    <style>
+      body::-webkit-scrollbar{
+        display: none;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-left {
+        transform: translateX(-40px);
+      }
+      .reveal-right {
+        transform: translateX(40px);
+      }
+      .reveal-left.active,
+      .reveal-right.active {
+        transform: translateX(0);
+      }
+      .nav-reveal {
+        opacity: 0;
+        transform: translateY(-20px);
+        animation: navFade 0.8s ease forwards;
+      }
+      @keyframes navFade {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <%- include('partials/head') %>
+</head>
+
+  <body class="relative min-h-screen overflow-x-hidden text-gray-800 bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100">
+
+    <div class="absolute -top-40 -left-40 w-[420px] h-[420px] bg-pink-400/30 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-40 w-[420px] h-[420px] bg-indigo-400/30 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-[-160px] left-1/3 w-[420px] h-[420px] bg-cyan-400/30 rounded-full blur-3xl"></div>
+
+    <nav class="bg-transparent fixed top-0 left-0 w-full z-50 nav-reveal">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <i data-lucide="layout-dashboard" class="w-6 h-6 text-green-600"></i>
+          <span class="text-xl font-bold text-gray-800">Dashboard</span>
+        </div>
+        <a href="/logout">
+          <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm shadow-md">
+            Log Out
+          </button>
+        </a>
+      </div>
+    </nav>
+
+    <section class="pt-28 text-center px-6 relative z-10">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 reveal">
+        Welcome to Third Eye Dashboard
+      </h1>
+      <p class="text-gray-600 mt-3 text-lg reveal">
+        Manage your Students and Administrators with ease
+      </p>
+    </section>
+
+    <section class="max-w-5xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 gap-10 px-6 relative z-10">
+
+
+      <a
+        href="/AdminTable"
+        class="group reveal reveal-right bg-white/70 backdrop-blur-lg border border-purple-200 rounded-2xl p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center"
+      >
+        <div class="bg-purple-200 rounded-full p-4 mb-4 group-hover:bg-purple-300 transition">
+          <i data-lucide="user-cog" class="w-10 h-10 text-purple-700"></i>
+        </div>
+        <h2 class="text-2xl font-semibold text-gray-800">Administrators</h2>
+        <p class="text-gray-600 mt-2">
+          Manage administrator accounts and system access.
+        </p>
+        <button class="mt-4 bg-purple-600 text-white px-5 py-2 rounded-lg hover:bg-purple-700 transition text-sm shadow">
+          Manage Admins
+        </button>
+      </a>
+            <a
+        href="/Studentstable"
+        class="group reveal reveal-left bg-white/70 backdrop-blur-lg border border-green-200 rounded-2xl p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center"
+      >
+        <div class="bg-green-200 rounded-full p-4 mb-4 group-hover:bg-green-300 transition">
+          <i data-lucide="users" class="w-10 h-10 text-green-700"></i>
+        </div>
+        <h2 class="text-2xl font-semibold text-gray-800">Students</h2>
+        <p class="text-gray-600 mt-2">
+          Add, update, and manage all student records easily.
+        </p>
+        <button class="mt-4 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition text-sm shadow">
+          Manage Students
+        </button>
+      </a>
+    </section>
+
+    <script>
+      const reveals = document.querySelectorAll(".reveal");
+      const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        reveals.forEach((el) => {
+          const elementTop = el.getBoundingClientRect().top;
+          if (elementTop < windowHeight - 120) {
+            el.classList.add("active");
+          }
+        });
+      };
+      window.addEventListener("scroll", revealOnScroll);
+      window.addEventListener("load", revealOnScroll);
+      lucide.createIcons();
+    </script>
+    <%- include('partials/footer') %>
+</body>
+</html>

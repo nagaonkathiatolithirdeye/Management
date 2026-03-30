@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+
+    <style>
+      .fade-in {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+    </style>
+    <%- include('partials/head') %>
+</head>
+
+  <body class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700">
+
+    <div class="absolute top-[-140px] left-[-140px] w-[360px] h-[360px] bg-pink-500/30 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-[-140px] right-[-140px] w-[360px] h-[360px] bg-cyan-400/30 rounded-full blur-3xl"></div>
+
+    <div
+      id="loader"
+      class="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 z-50 transition-opacity duration-700"
+    >
+      <div class="mb-6 animate-pulse">
+        <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75A2.25 2.25 0 0014.25 4.5h-4.5A2.25 2.25 0 007.5 6.75V10.5m9 0h-9m9 0v7.5A2.25 2.25 0 0114.25 20.25h-4.5A2.25 2.25 0 017.5 18V10.5m9 0H7.5" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+      <p class="mt-6 text-white/90 tracking-wide text-sm">Loading Admin Panel...</p>
+    </div>
+
+    <div
+      id="loginCard"
+      class="hidden relative z-10 w-[90%] max-w-md p-10 rounded-2xl
+             bg-white/15 backdrop-blur-xl
+             border border-white/30
+             shadow-[0_20px_50px_rgba(0,0,0,0.35)]
+             text-white opacity-0"
+    >
+      <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
+
+      <div class="relative text-center mb-6">
+        <div class="mx-auto mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-white">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75A2.25 2.25 0 0014.25 4.5h-4.5A2.25 2.25 0 007.5 6.75V10.5m9 0h-9m9 0v7.5A2.25 2.25 0 0114.25 20.25h-4.5A2.25 2.25 0 017.5 18V10.5m9 0H7.5" />
+          </svg>
+        </div>
+        <h1 class="text-2xl font-semibold">Admin Login</h1>
+        <p class="text-white/70 text-sm mt-1">Sign in to access your dashboard</p>
+      </div>
+
+      <form action="/login" method="POST" class="relative space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-white/80 mb-1">Email Address</label>
+          <input
+            name="email"
+            type="email"
+            placeholder="admin@example.com"
+            class="w-full px-4 py-2.5 rounded-lg
+                   bg-white/20 text-white placeholder-white/60
+                   border border-white/30
+                   focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            required
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-white/80 mb-1">Password</label>
+          <input
+            name="password"
+            type="password"
+            placeholder="********"
+            class="w-full px-4 py-2.5 rounded-lg
+                   bg-white/20 text-white placeholder-white/60
+                   border border-white/30
+                   focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-4 py-2.5 shadow-lg transition"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <% if(admins.length == 0){ %>
+      <a href="/AdminForm" class="mt-4 relative">
+        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-lg py-2.5 transition shadow-lg">
+          Create Admin
+        </button>
+      </a>
+      <% } %>
+    </div>
+
+    <script>
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const loader = document.getElementById("loader");
+          const card = document.getElementById("loginCard");
+          loader.classList.add("opacity-0");
+          setTimeout(() => {
+            loader.style.display = "none";
+            card.classList.remove("hidden");
+            card.classList.add("fade-in");
+          }, 300);
+        }, 500);
+      });
+    </script>
+    <%- include('partials/footer') %>
+</body>
+</html>

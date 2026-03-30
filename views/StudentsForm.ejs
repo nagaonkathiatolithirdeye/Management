@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Student</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <style>
+    input, select, textarea {
+      border: 1px solid #d1d5db;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+    }
+  </style>
+  <%- include('partials/head') %>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 to-blue-100 min-h-screen p-4">
+
+  <a href="/StudentsTable"
+     class="absolute rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700 transition">
+    ← Back
+  </a>
+
+  <div class="max-w-6xl mx-auto bg-white mt-14 rounded-2xl shadow-xl overflow-hidden">
+
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white">
+      <h2 class="text-2xl font-bold flex items-center gap-2">
+        🎓 Add New Student
+      </h2>
+      <p class="text-blue-100 text-sm">
+        Enter student information
+      </p>
+    </div>
+
+    <form method="post" action="/studentsForm" autocomplete="off"
+          class="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4 text-sm">
+
+      <div class="rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          👤 Personal
+        </h3>
+        <div class="space-y-2">
+          <input name="name" placeholder="Full Name" required class="w-full rounded-md px-3 py-2" />
+          <input name="fatherName" placeholder="Father's Name" class="w-full rounded-md px-3 py-2" />
+          <input name="motherName" placeholder="Mother's Name" class="w-full rounded-md px-3 py-2" />
+          <div class="grid grid-cols-2 gap-2">
+            <input type="date" name="dob" class="w-full rounded-md px-3 py-2" />
+            <select name="gender" class="w-full rounded-md px-3 py-2">
+              <option value="">Gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          📞 Contact
+        </h3>
+        <div class="space-y-2">
+          <input name="phone" placeholder="Phone Number" class="w-full rounded-md px-3 py-2" />
+          <input type="email" name="email" placeholder="Email" class="w-full rounded-md px-3 py-2" />
+          <textarea name="address" rows="2" placeholder="Address"
+            class="w-full rounded-md px-3 py-2 resize-none"></textarea>
+            
+        </div>
+      </div>
+
+      <div class="rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          📚 Course
+        </h3>
+        <div class="space-y-2">
+          <input name="course" placeholder="Course Name" class="w-full rounded-md px-3 py-2" />
+          <textarea name="receiptNo" rows="4" placeholder="Receipt No"
+            class="w-full rounded-md px-3 py-2 resize-none"></textarea>
+        </div>
+         <div class="grid grid-cols-2 gap-2">
+           <h3 class="font-bold ml-6">Centre :-</h3>
+            <select name="centre" class="w-full rounded-md px-3 py-2">
+              <option>Kathiatoli</option>
+              <option>Nagaon</option>
+            </select>
+          </div>
+                  <div class="grid grid-cols-2 items-center gap-2">
+            <h3 class="font-bold ml-6">Start Date :-</h3>
+            <input type="date" name="courseStart"
+                   class="w-full rounded-md px-3 py-2" />
+          </div>
+      </div>
+
+      <div class="lg:col-span-2 rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          💰 Fees
+        </h3>
+
+        <div class="grid grid-cols-3 gap-3">
+          <input type="number" id="totalFees" name="totalFees"
+                 placeholder="Total ₹"
+                 class="rounded-md px-3 py-2" />
+          <input type="number" id="collectedFees" name="collectedFees"
+                 placeholder="Collected ₹"
+                 class="rounded-md px-3 py-2" />
+          <input type="number" id="remainingFees" readonly
+                 placeholder="Remaining ₹"
+                 class="rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed" />
+        </div>
+
+        <div class="mt-3 flex justify-end">
+          <button type="submit"
+            class="rounded-lg bg-blue-600 px-10 py-2.5 text-white font-medium
+                   hover:bg-blue-700 transition shadow">
+            💾 Save Student
+          </button>
+        </div>
+      </div>
+
+      <div class="rounded-xl border bg-gray-50 p-3 flex flex-col justify-center">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          📋 Summary
+        </h3>
+        <p class="text-gray-600 text-xs leading-relaxed">
+          Please verify all student details before saving.
+          This information will be used for official records.
+        </p>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    const total = document.getElementById("totalFees");
+    const collected = document.getElementById("collectedFees");
+    const remaining = document.getElementById("remainingFees");
+
+    function updateRemaining() {
+      remaining.value = Math.max((+total.value || 0) - (+collected.value || 0), 0);
+    }
+    total.addEventListener("input", updateRemaining);
+    collected.addEventListener("input", updateRemaining);
+  </script>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

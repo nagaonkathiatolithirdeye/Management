@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Management</title>
+  <%- include('partials/head') %>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 to-blue-100 min-h-screen p-6">
+
+  <!-- Back -->
+  <a href="/dashboard"
+     class="inline-flex items-center gap-2 mb-6 rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700 transition">
+    ← Back to Dashboard
+  </a>
+
+  <!-- Card -->
+  <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">👨‍💼 Admin Management</h2>
+        <p class="text-sm text-gray-500">Manage system administrators</p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+
+        <!-- Search -->
+        <div class="relative">
+          <input
+            type="text"
+            id="searchAdmin"
+            placeholder="Search admin by name..."
+            class="w-72 rounded-lg border border-gray-300 pl-10 pr-3 py-2 text-sm
+                   focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="w-5 h-5 text-gray-400 absolute left-3 top-2.5"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+          </svg>
+        </div>
+
+        <!-- Add Admin -->
+        <a href="/form"
+           class="inline-flex items-center justify-center gap-2 rounded-lg
+                  bg-blue-600 px-5 py-2.5 text-sm text-white font-medium
+                  hover:bg-blue-700 transition shadow">
+          ➕ Create Admin
+        </a>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto rounded-lg border">
+      <table class="min-w-full text-sm text-left">
+        <thead class="bg-gray-100 text-gray-700 uppercase text-xs font-semibold">
+          <tr>
+            <th class="px-5 py-3">Admin Name</th>
+            <th class="px-5 py-3 text-center">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="adminTable" class="divide-y">
+          <% admins.forEach((admin) => { %>
+          <tr class="hover:bg-blue-50 transition">
+
+            <!-- NAME -->
+            <td class="px-5 py-3 font-medium text-gray-800">
+              <%= admin.fullName %>
+            </td>
+
+            <!-- ACTIONS -->
+            <td class="px-5 py-3 text-center">
+              <div class="flex justify-center gap-2">
+
+                <a href="/edit/<%= admin.id %>"
+                   class="rounded-lg border p-2 text-blue-600 hover:bg-blue-100 transition"
+                   title="Edit Admin">
+                  ✏️
+                </a>
+
+                <a href="/delete/<%= admin.id %>"
+                   class="rounded-lg border border-red-300 p-2 text-red-600 hover:bg-red-100 transition"
+                   title="Delete Admin">
+                  🗑️
+                </a>
+
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Search Script -->
+  <script>
+    const searchAdmin = document.getElementById("searchAdmin");
+    const rows = document
+      .getElementById("adminTable")
+      .getElementsByTagName("tr");
+
+    searchAdmin.addEventListener("keyup", () => {
+      const filter = searchAdmin.value.toLowerCase();
+      for (let i = 0; i < rows.length; i++) {
+        const nameCell = rows[i].getElementsByTagName("td")[0];
+        if (nameCell) {
+          const nameText = nameCell.textContent || nameCell.innerText;
+          rows[i].style.display = nameText.toLowerCase().includes(filter)
+            ? ""
+            : "none";
+        }
+      }
+    });
+  </script>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

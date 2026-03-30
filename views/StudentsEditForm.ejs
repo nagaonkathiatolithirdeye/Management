@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Update Student</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <style>
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    input,
+    select,
+    textarea {
+      border: 1px solid #d1d5db;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+    }
+  </style>
+  <%- include('partials/head') %>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 to-blue-100 min-h-screen p-4">
+
+  <!-- Back button: in-flow on mobile, absolute on larger screens -->
+  <a href="/StudentsTable"
+    class="inline-flex items-center mb-4 gap-2 sm:absolute rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700 transition text-sm">
+    ← Back
+  </a>
+
+  <div class="max-w-6xl mx-auto sm:mt-10 bg-white rounded-2xl shadow-xl overflow-hidden">
+
+    <!-- Header -->
+    <div class="bg-orange-600 p-4 text-white">
+      <h2 class="text-xl sm:text-2xl font-bold flex items-center gap-2">
+        ✏️ Update Student
+      </h2>
+      <p class="text-orange-100 text-sm mt-0.5">
+        Modify student information
+      </p>
+    </div>
+
+    <form method="post" action="/UpdatestudentsForm/<%= student._id %>" autocomplete="off"
+      class="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4 text-sm">
+
+      <!-- Personal -->
+      <div class="rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          👤 Personal
+        </h3>
+        <div class="space-y-2">
+          <input name="name" value="<%= student.name %>" placeholder="Full Name" class="w-full rounded-md px-3 py-2" />
+          <input name="fatherName" value="<%= student.fatherName %>" placeholder="Father's Name"
+            class="w-full rounded-md px-3 py-2" />
+          <input name="motherName" value="<%= student.motherName %>" placeholder="Mother's Name"
+            class="w-full rounded-md px-3 py-2" />
+          <div class="grid grid-cols-1 xs:grid-cols-2 gap-2">
+            <input type="date" name="dob" value="<%= student.dob %>" class="w-full rounded-md px-3 py-2" />
+            <select name="gender" class="w-full rounded-md px-3 py-2 bg-white">
+              <option value="">Gender</option>
+              <option value="Male" <%=student.gender==="Male" ? "selected" : "" %>>Male</option>
+              <option value="Female" <%=student.gender==="Female" ? "selected" : "" %>>Female</option>
+              <option value="Other" <%=student.gender==="Other" ? "selected" : "" %>>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          📞 Contact
+        </h3>
+        <div class="space-y-2">
+          <input name="phone" value="<%= student.phone %>" placeholder="Phone" class="w-full rounded-md px-3 py-2" />
+          <input type="email" name="email" value="<%= student.email %>" placeholder="Email"
+            class="w-full rounded-md px-3 py-2" />
+          <textarea name="address" rows="2" placeholder="Address"
+            class="w-full rounded-md px-3 py-2 resize-none"><%= student.address %></textarea>
+        </div>
+      </div>
+
+      <!-- Course -->
+      <div class="rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          📚 Course
+        </h3>
+        <div class="space-y-2">
+          <input name="course" value="<%= student.course %>" placeholder="Course Name"
+            class="w-full rounded-md px-3 py-2" />
+          <textarea name="receiptNo" rows="3" placeholder="Receipt No"
+            class="w-full rounded-md px-3 py-2 resize-none"><%= student.receiptNo %></textarea>
+
+          <div class="flex items-center gap-2">
+            <label class="font-semibold text-gray-600 whitespace-nowrap w-24 shrink-0">Centre :</label>
+            <select name="centre" class="flex-1 rounded-md px-3 py-2 bg-white">
+              <option value="Kathiatoli" <%=student.centre==="Kathiatoli" ? "selected" : "" %>>Kathiatoli</option>
+              <option value="Nagaon" <%=student.centre==="Nagaon" ? "selected" : "" %>>Nagaon</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label class="font-semibold text-gray-600 whitespace-nowrap w-24 shrink-0">Start Date :</label>
+            <input type="date" name="courseStart" value="<%= student.courseStart %>"
+              class="flex-1 rounded-md px-3 py-2" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Fees -->
+      <div class="lg:col-span-2 rounded-xl border bg-gray-50 p-3">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          💰 Fees
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs text-gray-500 mb-1">Total ₹</label>
+            <input type="number" id="totalFees" name="totalFees" value="<%= student.totalFees %>" placeholder="Total ₹"
+              class="w-full rounded-md px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-xs text-gray-500 mb-1">Collected ₹</label>
+            <input type="number" id="collectedFees" name="collectedFees" value="<%= student.collectedFees %>"
+              placeholder="Collected ₹" class="w-full rounded-md px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-xs text-gray-500 mb-1">Remaining ₹</label>
+            <input type="number" id="remainingFees" name="remainingFees" readonly value="<%= student.remainingFees %>"
+              placeholder="Remaining ₹" class="w-full rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed" />
+          </div>
+        </div>
+
+        <div class="mt-4 flex justify-end">
+          <button type="submit" class="w-full sm:w-auto rounded-lg bg-orange-600 px-10 py-2.5 text-white font-medium
+                   hover:bg-orange-700 transition shadow">
+            🔄 Update Student
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="rounded-xl border bg-gray-50 p-3 flex flex-col justify-center">
+        <h3 class="mb-2 font-semibold text-gray-700 border-b border-indigo-500 pb-1">
+          📋 Summary
+        </h3>
+        <p class="text-gray-600 text-xs leading-relaxed">
+          Review the updated details carefully before saving.
+          Changes will be applied immediately.
+        </p>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    const total = document.getElementById("totalFees");
+    const collected = document.getElementById("collectedFees");
+    const remaining = document.getElementById("remainingFees");
+
+    function updateRemaining() {
+      remaining.value = Math.max((+total.value || 0) - (+collected.value || 0), 0);
+    }
+
+    total.addEventListener("input", updateRemaining);
+    collected.addEventListener("input", updateRemaining);
+  </script>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>

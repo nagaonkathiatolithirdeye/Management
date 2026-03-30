@@ -1,0 +1,34 @@
+<!-- views/partials/footer.ejs -->
+<!-- Centralized JavaScript CDNs and Fallbacks -->
+
+<!-- Lucide Icons -->
+<% if (typeof useCDN !== 'undefined' && useCDN) { %>
+    <!-- Production: Use version-locked CDN with local fallback -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js" onerror="console.warn('Lucide CDN failed, loading local fallback'); document.write('<script src=\'/js/lucide.min.js\'><\\/script>');"></script>
+<% } else { %>
+    <!-- Local/Dev Mode: Load local files explicitly -->
+    <script src="/js/lucide.min.js"></script>
+<% } %>
+
+<!-- Specific Scripts for PDF/Excel Exports (Only loaded when required) -->
+<% if (typeof needsExport !== 'undefined' && needsExport) { %>
+    <% if (typeof useCDN !== 'undefined' && useCDN) { %>
+        <!-- jsPDF -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onerror="console.warn('jsPDF CDN failed, loading local fallback'); document.write('<script src=\'/js/jspdf.umd.min.js\'><\\/script>');"></script>
+        <!-- jsPDF AutoTable -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js" onerror="console.warn('jsPDF AutoTable CDN failed, loading local fallback'); document.write('<script src=\'/js/jspdf.plugin.autotable.min.js\'><\\/script>');"></script>
+        <!-- SheetJS (xlsx) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" onerror="console.warn('XLSX CDN failed, loading local fallback'); document.write('<script src=\'/js/xlsx.full.min.js\'><\\/script>');"></script>
+    <% } else { %>
+        <script src="/js/jspdf.umd.min.js"></script>
+        <script src="/js/jspdf.plugin.autotable.min.js"></script>
+        <script src="/js/xlsx.full.min.js"></script>
+    <% } %>
+<% } %>
+
+<!-- Initializers -->
+<script>
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+</script>

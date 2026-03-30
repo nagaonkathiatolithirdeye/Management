@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Profile</title>
+  <%- include('partials/head') %>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 to-blue-100 min-h-screen p-4 sm:p-6">
+
+  <!-- Back button: static flow on mobile, absolute on larger screens -->
+  <a href="/StudentsTable"
+    class="inline-flex items-center mb-4 gap-2 sm:absolute rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700 transition text-sm">
+    ← Back
+  </a>
+
+  <div class="max-w-4xl mx-auto bg-white sm:mt-4 rounded-2xl shadow-xl overflow-hidden">
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-5 sm:p-6 text-white">
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-6">
+        <div class="text-center sm:text-left w-full">
+          <h2 class="text-2xl sm:text-3xl font-bold break-words">
+            <span>🎓 </span>
+            <%= student.name %>
+          </h2>
+          <p class="text-blue-100 text-base sm:text-lg mt-1 ml-1 sm:ml-2">
+            📋 <%= student.course %>
+          </p>
+          <p class="text-sm mt-1 ml-1 sm:ml-2">
+            📞 <%= student.phone %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 text-sm">
+
+      <!-- Personal Details -->
+      <div class="rounded-xl border bg-gray-50 p-4">
+        <h3 class="mb-3 font-semibold text-gray-700 border-b-2 border-indigo-500 pb-2">
+          👤 Personal Details
+        </h3>
+        <div class="space-y-1.5">
+          <p><b>Father:</b>
+            <%= student.fatherName %>
+          </p>
+          <p><b>Mother:</b>
+            <%= student.motherName %>
+          </p>
+          <p><b>Gender:</b>
+            <%= student.gender %>
+          </p>
+          <p><b>DOB:</b>
+            <%= student.dob %>
+          </p>
+          <p class="break-all"><b>Email:</b>
+            <%= student.email %>
+          </p>
+          <p><b>Address:</b>
+            <%= student.address %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Course Details -->
+      <div class="rounded-xl border bg-gray-50 p-4">
+        <h3 class="mb-3 font-semibold text-gray-700 border-b-2 border-indigo-500 pb-2">
+          📚 Course Details
+        </h3>
+        <div class="space-y-1.5">
+          <p><b>Course:</b>
+            <%= student.course %>
+          </p>
+          <p><b>Centre:</b>
+            <%= student.centre %>
+          </p>
+          <p><b>Course Start:</b>
+            <%= student.courseStart %>
+          </p>
+          <p class="break-all"><b>Receipt No:</b>
+            <%= student.receiptNo %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Fees Summary -->
+      <div class="sm:col-span-2 grid grid-cols-3 gap-3 sm:gap-4">
+
+        <div class="rounded-xl bg-blue-50 p-3 sm:p-4 text-center">
+          <p class="text-gray-600 text-xs sm:text-sm">Total Fees</p>
+          <p class="text-xl sm:text-2xl font-bold text-blue-700 mt-1">₹<%= student.totalFees %>
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-green-50 p-3 sm:p-4 text-center">
+          <p class="text-gray-600 text-xs sm:text-sm">Collected</p>
+          <p class="text-xl sm:text-2xl font-bold text-green-700 mt-1">₹<%= student.collectedFees %>
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-red-50 p-3 sm:p-4 text-center">
+          <p class="text-gray-600 text-xs sm:text-sm">Remaining</p>
+          <p class="text-xl sm:text-2xl font-bold text-red-700 mt-1">₹<%= student.remainingFees %>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col xs:flex-row justify-end gap-3 border-t bg-gray-50 p-4">
+      <a href="/editStudent/<%= student._id %>"
+        class="rounded-lg bg-yellow-500 px-4 py-2 text-sm text-white hover:bg-yellow-600 text-center transition">
+        ✏️ Edit
+      </a>
+      <a href="/PrintStudent/<%= student._id %>" target="_blank"
+        class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700 text-center transition">
+        🖨️ Print
+      </a>
+    </div>
+
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>

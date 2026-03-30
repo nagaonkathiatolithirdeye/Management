@@ -1,0 +1,17 @@
+<!-- views/partials/head.ejs -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Preload core fonts for fast rendering -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS Handling -->
+<% if (typeof useCDN !== 'undefined' && useCDN) { %>
+    <!-- Production Mode: Use Compiled CSS for speed, avoiding runtime calculation -->
+    <link rel="stylesheet" href="/css/tailwind-compiled.css" id="tailwind-compiled" onerror="this.onerror=null; this.href='/css/tailwind-compiled.css'; console.warn('Compiled CSS failed to load, trying local fallback.');">
+<% } else { %>
+    <!-- Development Mode/Fallback: Use Tailwind CDN with robust fallback script -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" onerror="console.warn('Tailwind CDN failed, loading local fallback'); document.write('<script src=\'/js/tailwindcss.js\'><\\/script>');"></script>
+<% } %>

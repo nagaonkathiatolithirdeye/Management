@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Management</title>
+
+  <%- include('partials/head') %>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 to-blue-100 min-h-screen p-4">
+
+  <a href="/dashboard">
+    <button
+      class="mb-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 transition">
+      ← Back to Dashboard
+    </button>
+  </a>
+
+  <div class="mx-auto w-[98%] rounded-xl bg-white/80 backdrop-blur border border-gray-200 shadow-lg">
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-b">
+      <h2 class="text-2xl font-bold text-gray-800">🎓 Student Management</h2>
+
+      <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+
+        <select id="centreFilter" class="w-full sm:w-44 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm
+                 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <option value="">All Centre</option>
+          <option value="kathiatoli">Kathiatoli</option>
+          <option value="nagaon">Nagaon</option>
+        </select>
+
+        <div class="relative w-full sm:w-72">
+          <input type="text" id="searchInput" placeholder="Search student..." class="w-full rounded-lg border border-gray-300 bg-white px-10 py-2 text-sm
+                   focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+          </svg>
+        </div>
+
+        <button id="exportPDF"
+          class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-red-700 transition">
+          📄 Export PDF
+        </button>
+
+        <button id="exportExcel"
+          class="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-green-700 transition">
+          📊 Export Excel
+        </button>
+
+        <a href="/studentsForm"
+          class="rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow hover:opacity-90 transition">
+          + Add Student
+        </a>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table id="studentTable" class="min-w-full text-sm text-left">
+        <thead class="sticky top-0 bg-gray-100 text-xs uppercase font-semibold text-gray-700 shadow-sm">
+          <tr>
+            <th class="px-4 py-3">Name</th>
+            <th class="px-4 py-3">Father</th>
+            <th class="px-4 py-3">Centre</th>
+            <th class="px-4 py-3">Phone</th>
+            <th class="px-4 py-3">Course</th>
+            <th class="px-4 py-3">Total</th>
+            <th class="px-4 py-3">Collected</th>
+            <th class="px-4 py-3">Remaining</th>
+            <th class="px-4 py-3 text-center">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y">
+          <% students.forEach(function(student) { %>
+            <tr class="hover:bg-blue-50 transition" data-centre="<%= student.centre.toLowerCase() %>">
+
+              <td class="px-4 py-3 font-semibold text-gray-800">
+                <%= student.name %>
+              </td>
+              <td class="px-4 py-3">
+                <%= student.fatherName %>
+              </td>
+              <td class="px-4 py-3">
+                <span class="rounded-full bg-blue-100 px-2 py-2 text-xs font-medium text-blue-700">
+                  <%= student.centre%>
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <%= student.phone %>
+              </td>
+
+              <td class="px-4 py-3">
+                <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
+                  <%= student.course %>
+                </span>
+              </td>
+
+              <td class="px-4 py-3 font-medium">₹<%= student.totalFees %>
+              </td>
+              <td class="px-4 py-3 text-green-600 font-medium">₹<%= student.collectedFees %>
+              </td>
+              <td class="px-4 py-3 text-red-600 font-medium">₹<%= student.remainingFees %>
+              </td>
+
+              <td class="px-4 py-3">
+                <div class="flex justify-center gap-2">
+
+                  <a href="/viewStudent/<%= student._id %>" class="rounded-lg border border-blue-200 bg-blue-50 p-2
+                         text-blue-600 transition hover:bg-blue-600 hover:text-white">
+                    👁️
+                  </a>
+
+                  <a href="/editStudent/<%= student._id %>" class="rounded-lg border border-gray-300 bg-gray-50 p-2
+                         text-gray-700 transition hover:bg-gray-700 hover:text-white">
+                    ✏️
+                  </a>
+
+                  <button dataid="<%= student._id %>" class="printBtn rounded-lg border border-indigo-200 bg-indigo-50 p-2
+                         text-indigo-600 transition hover:bg-indigo-600 hover:text-white">
+                    🖨️
+                  </button>
+
+                  <a href="/deleteStudent/<%= student._id %>" class="rounded-lg border border-red-200 bg-red-50 p-2
+                         text-red-600 transition hover:bg-red-600 hover:text-white">
+                    🗑️
+                  </a>
+
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const centreFilter = document.getElementById("centreFilter");
+    const rows = document.querySelectorAll("#studentTable tbody tr");
+
+    function filterTable() {
+      const searchText = searchInput.value.toLowerCase();
+      const selectedcentre = centreFilter.value;
+
+      rows.forEach(row => {
+        const nameText = row.querySelector("td").innerText.toLowerCase();
+        const rowcentre = row.dataset.centre;
+
+        const matchesSearch = nameText.includes(searchText);
+        const matchescentre = !selectedcentre || rowcentre === selectedcentre;
+
+        row.style.display = (matchesSearch && matchescentre) ? "" : "none";
+      });
+    }
+
+    searchInput.addEventListener("keyup", filterTable);
+    centreFilter.addEventListener("change", filterTable);
+
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".printBtn")) {
+        const id = e.target.closest(".printBtn").getAttribute("dataid");
+        window.open(`/PrintStudent/${id}`, "_blank");
+      }
+    });
+
+    document.getElementById("exportPDF").addEventListener("click", () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("landscape");
+      doc.text("Student Management Report", 14, 15);
+      doc.autoTable({ startY: 20, html: "#studentTable" });
+      doc.save("StudentsData.pdf");
+    });
+
+    document.getElementById("exportExcel").addEventListener("click", () => {
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.table_to_sheet(document.getElementById("studentTable"));
+      XLSX.utils.book_append_sheet(wb, ws, "Students");
+      XLSX.writeFile(wb, "StudentsData.xlsx");
+    });
+  </script>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>
