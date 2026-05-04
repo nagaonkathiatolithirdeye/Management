@@ -22,11 +22,11 @@
     <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-5 sm:p-6 text-white">
       <div class="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-6">
         <div class="text-center sm:text-left w-full">
-          <h2 class="text-2xl sm:text-3xl font-bold break-words">
+          <h2 class="text-2xl sm:text-3xl font-bold break-words uppercase">
             <span>🎓 </span>
             <%= student.name %>
           </h2>
-          <p class="text-blue-100 text-base sm:text-lg mt-1 ml-1 sm:ml-2">
+          <p class="text-blue-100 text-base sm:text-lg mt-1 ml-1 sm:ml-2 uppercase">
             📋 <%= student.course %>
           </p>
           <p class="text-sm mt-1 ml-1 sm:ml-2">
@@ -44,7 +44,7 @@
         <h3 class="mb-3 font-semibold text-gray-700 border-b-2 border-indigo-500 pb-2">
           👤 Personal Details
         </h3>
-        <div class="space-y-1.5">
+        <div class="space-y-1.5 uppercase">
           <p><b>Father:</b>
             <%= student.fatherName %>
           </p>
@@ -63,10 +63,10 @@
           <p><b>Enrollment:</b>
             <span class="capitalize"><%= student.enrollmentType || 'offline' %></span>
           </p>
-          <p class="break-all"><b>Email:</b>
+          <p class="break-all lowercase"><b>Email:</b>
             <%= student.email %>
           </p>
-          <p><b>Address:</b>
+          <p class="capitalize"><b>Address:</b>
             <%= student.address %>
           </p>
         </div>
@@ -77,7 +77,7 @@
         <h3 class="mb-3 font-semibold text-gray-700 border-b-2 border-indigo-500 pb-2">
           📚 Course Details
         </h3>
-        <div class="space-y-1.5">
+        <div class="space-y-1.5 uppercase">
           <p><b>Course:</b>
             <%= student.course %>
           </p>
