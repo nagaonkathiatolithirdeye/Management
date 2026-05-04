@@ -155,6 +155,9 @@ app.post("/studentsForm", requireLogin, async (req, res) => {
       totalFees,
       collectedFees,
       courseStart,
+      qualification,
+      dateOfBirth,
+      enrollmentType,
     } = req.body;
 
     const remainingFees = totalFees - collectedFees;
@@ -175,6 +178,9 @@ app.post("/studentsForm", requireLogin, async (req, res) => {
       collectedFees,
       remainingFees,
       courseStart,
+      qualification,
+      dateOfBirth,
+      enrollmentType,
     });
 
     await newStudent.save();
@@ -265,6 +271,9 @@ app.post("/UpdatestudentsForm/:id", requireLogin, async (req, res) => {
       collectedFees: req.body.collectedFees,
       remainingFees: req.body.remainingFees,
       courseStart: req.body.courseStart,
+      qualification: req.body.qualification,
+      dateOfBirth: req.body.dateOfBirth,
+      enrollmentType: req.body.enrollmentType,
     };
 
     await Student.findByIdAndUpdate(req.params.id, updatedData);

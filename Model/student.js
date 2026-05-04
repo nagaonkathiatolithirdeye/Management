@@ -17,6 +17,13 @@ const studentSchema = new mongoose.Schema(
     },
     address: String,
     dob: String,
+    qualification: String,
+    dateOfBirth: Date,
+    enrollmentType: {
+      type: String,
+      enum: ["online", "offline"],
+      default: "offline"
+    },
     phone: String,
     email: String,
     course: String,

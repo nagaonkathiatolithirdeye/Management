@@ -55,7 +55,13 @@
             <%= student.gender %>
           </p>
           <p><b>DOB:</b>
-            <%= student.dob %>
+            <%= student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString('en-GB') : student.dob %>
+          </p>
+          <p><b>Qualification:</b>
+            <%= student.qualification || 'N/A' %>
+          </p>
+          <p><b>Enrollment:</b>
+            <span class="capitalize"><%= student.enrollmentType || 'offline' %></span>
           </p>
           <p class="break-all"><b>Email:</b>
             <%= student.email %>
