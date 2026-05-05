@@ -33,7 +33,7 @@
 
   <!-- Back button: in-flow on mobile, absolute on larger screens -->
   <a href="/StudentsTable"
-    class="inline-flex items-center mb-4 gap-2 sm:absolute rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700 transition text-sm">
+    class="inline-flex items-center mb-4 gap-2 sm:absolute rounded-lg bg-orange-600 px-4 py-2 text-white shadow hover:bg-orange-700 transition text-sm">
     ← Back
   </a>
 
@@ -70,9 +70,24 @@
           <div class="grid grid-cols-1 xs:grid-cols-2 gap-4 items-center">
             <div>
               <label class="block text-xs font-semibold text-gray-600 mb-1">Date of Birth</label>
-              <input type="date" name="dateOfBirth"
-                value="<%= student.dateOfBirth ? new Date(student.dateOfBirth).toISOString().split('T')[0] : '' %>"
-                class="w-full rounded-md px-3 py-2" />
+              <% 
+                let birthDate = "";
+                if (student.dateOfBirth) {
+                  try {
+                    birthDate = new Date(student.dateOfBirth).toISOString().split('T')[0];
+                  } catch (e) {}
+                }
+                if (!birthDate && student.dob) {
+                  if (/^\d{4}-\d{2}-\d{2}$/.test(student.dob)) {
+                    birthDate = student.dob;
+                  } else {
+                    try {
+                      birthDate = new Date(student.dob).toISOString().split('T')[0];
+                    } catch (e) {}
+                  }
+                }
+              %>
+                <input type="date" name="dateOfBirth" value="<%= birthDate %>" class="w-full rounded-md px-3 py-2" />
             </div>
             <div>
               <label class="block text-xs font-semibold text-gray-600 mb-1">Gender</label>

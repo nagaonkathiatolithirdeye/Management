@@ -146,7 +146,6 @@ app.post("/studentsForm", requireLogin, async (req, res) => {
       motherName,
       gender,
       address,
-      dob,
       phone,
       email,
       centre,
@@ -168,7 +167,7 @@ app.post("/studentsForm", requireLogin, async (req, res) => {
       motherName,
       gender,
       address,
-      dob,
+      dob: dateOfBirth, // Sync dob with dateOfBirth
       phone,
       email,
       centre,
@@ -261,7 +260,7 @@ app.post("/UpdatestudentsForm/:id", requireLogin, async (req, res) => {
       motherName: req.body.motherName,
       gender: req.body.gender,
       address: req.body.address,
-      dob: req.body.dob,
+      dob: req.body.dateOfBirth, // Sync dob with dateOfBirth
       phone: req.body.phone,
       email: req.body.email,
       course: req.body.course,
